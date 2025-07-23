@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Error";
+    var returnUrl = ViewBag.ReturnUrl ?? Url.Action("Index", "Home");
+}
+
+<h2 class="text-danger">Ocurrió un error</h2>
+
+<div class="alert alert-warning mt-3">
+    @ViewBag.Mensaje
+</div>
+
+<form method="get" action="@returnUrl">
+    <button type="submit" class="btn btn-primary">Atrás</button>
+</form>

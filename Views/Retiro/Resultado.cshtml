@@ -1,0 +1,26 @@
+﻿@model WebOriginBank.Models.Tarjeta
+@{
+    ViewData["Title"] = "Resultado del Retiro";
+    decimal montoRetirado = ViewBag.MontoRetirado != null ? (decimal)ViewBag.MontoRetirado : 0;
+    decimal nuevoBalance = ViewBag.NuevoBalance != null ? (decimal)ViewBag.NuevoBalance : 0;
+}
+
+<h2 class="text-success">Operación Exitosa</h2>
+
+<div class="alert alert-info mt-3">
+    <p><strong>Monto retirado:</strong> $ @montoRetirado.ToString("N2")</p>
+    <p><strong>Nuevo balance:</strong> $ @nuevoBalance.ToString("N2")</p>
+</div>
+
+<table class="table table-striped mt-4">
+    <tr>
+        <th>Número de Tarjeta</th>
+        <td>@Model.Nro.Substring(0, 4)-@Model.Nro.Substring(4, 4)-@Model.Nro.Substring(8, 4)-@Model.Nro.Substring(12, 4)</td>
+    </tr>
+    <tr>
+        <th>Fecha de Vencimiento</th>
+        <td>@Model.Vencimiento.ToString("MM/yy")</td>
+    </tr>
+</table>
+
+@await Html.PartialAsync("_BotonesOperacion")

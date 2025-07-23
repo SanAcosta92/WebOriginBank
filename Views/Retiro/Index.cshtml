@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Retiro";
+}
+
+<h2 class="text-center mb-4 display-6">Ingrese el monto a retirar</h2>
+
+<div class="d-flex justify-content-center mt-4">
+    <form method="post" asp-action="ProcesarRetiro" class="bg-light p-5 rounded shadow text-center">
+        <input type="text" id="monto" name="monto" readonly class="form-control" placeholder="0.00" />
+
+        <div class="keypad mt-3">
+            @foreach (var i in new[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "0" })
+            {
+                <button type="button" class="btn btn-secondary m-2 fs-3 px-3 py-2" onclick="agregarDigito('@i')">@i</button>
+                if (i == "3" || i == "6" || i == "9")
+                {
+                    <br />
+                }
+            }
+            <button type="button" class="btn btn-secondary m-2 fs-3 px-3 py-2" onclick="limpiar()">L</button>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary m-2 ">Aceptar</button>
+        </div>
+        @await Html.PartialAsync("_BotonesOperacion")
+    </form>
+</div>
+
+
+@section Scripts {
+    <script>
+        function agregarDigito(digito) {
+            let input = document.getElementById("monto");
+            input.value += digito;
+        }
+
+        function limpiar() {
+            document.getElementById("monto").value = "";
+        }
+    </script>
+
+}

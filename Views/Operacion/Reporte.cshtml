@@ -1,0 +1,42 @@
+﻿@model List<WebOriginBank.Models.Operacion>
+
+@{
+    ViewData["Title"] = "Reporte de Operaciones";
+}
+
+<h2>Reporte de Operaciones</h2>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-warning mt-3">
+        No hay operaciones registradas.
+    </div>
+}
+else
+{
+    <table class="table table-bordered mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>Número de Tarjeta</th>
+                <th>Fecha y Hora</th>
+                <th>Monto Retirado</th>
+                <th>Balance</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var op in Model)
+            {
+                <tr>
+                    <td>@(op.Tarjeta?.Nro.Substring(0, 4))-@(op.Tarjeta?.Nro.Substring(4, 4))-@(op.Tarjeta?.Nro.Substring(8, 4))-@(op.Tarjeta?.Nro.Substring(12, 4))</td>
+                    <td>@op.FechaHora.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>$ @String.Format("{0:N2}", op.Monto ?? 0.00m)</td>
+                    <td>$ @String.Format("{0:N2}",op.Tarjeta?.Balance)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
+@await Html.PartialAsync("_BotonesOperacion")

@@ -1,0 +1,23 @@
+﻿@model WebOriginBank.Models.Tarjeta
+@{
+    ViewData["Title"] = "Balance";
+}
+
+<h2>Información de la Tarjeta</h2>
+
+<table class="table mt-3">
+    <tr>
+        <th>Número</th>
+        <td>@Model.Nro.Substring(0, 4)-@Model.Nro.Substring(4, 4)-@Model.Nro.Substring(8, 4)-@Model.Nro.Substring(12, 4)</td>
+    </tr>
+    <tr>
+        <th>Fecha de Vencimiento</th>
+        <td>@Model.Vencimiento.ToString("MM/yy")</td>
+    </tr>
+    <tr>
+        <th>Balance</th>
+        <td>$ @Model.Balance.ToString("N2")</td>
+    </tr>
+</table>
+
+@await Html.PartialAsync("_BotonesOperacion")

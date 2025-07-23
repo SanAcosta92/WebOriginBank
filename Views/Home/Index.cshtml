@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "Ingreso de Tarjeta";
+}
+<h1 class="text-center display-2 ">¡Bienvenido! </h1>
+<h2 class="text-center mb-4 display-6">Ingrese su número de tarjeta</h2>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+<div class="d-flex justify-content-center mt-4">
+    <form method="post" asp-action="ValidarTarjeta" class="bg-light p-5 rounded shadow text-center">
+        <div class="mb-4">
+            <input type="text" id="numeroTarjeta" name="numeroTarjeta" maxlength="19"
+                   readonly class="form-control text-center mx-auto" style="width: 200px; font-size: 1.2rem;" />
+        </div>
+        <div class="keypad">
+            @for (int i = 1; i <= 9; i++)
+            {
+                <button type="button"
+                        class="btn btn-secondary m-2 fs-4 px-4 py-3"
+                        onclick="agregarDigito('@i')">
+                    @i
+                </button>
+
+                if (i % 3 == 0)
+                {
+                    <br />
+                }
+            }
+            <button type="button" class="btn btn-secondary m-2 fs-5 px-4 py-3" onclick="limpiarCampo()">Limpiar</button>
+            <button type="button" class="btn btn-secondary m-2 fs-4 px-4 py-3" onclick="agregarDigito('0')">0</button>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary fs-5 px-5 py-2">Aceptar</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+<script>
+    function agregarDigito(digito) {
+        let input = document.getElementById("numeroTarjeta");
+        let value = input.value.replace(/-/g, "");
+
+        if (value.length >= 16) return;
+
+        value += digito;
+
+        let formateado = "";
+        for (let i = 0; i < value.length; i++) {
+            if (i > 0 && i % 4 === 0) formateado += "-";
+            formateado += value[i];
+        }
+
+        input.value = formateado;
+    }
+
+        function limpiarCampo() {
+            document.getElementById("numeroTarjeta").value = "";
+        }
+    </script>
+}
